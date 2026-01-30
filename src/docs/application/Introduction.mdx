@@ -1,0 +1,19 @@
+# Application Architecture
+
+## This is a Logic Placeholder
+The **Application** layer currently serves as a structured container for your project's business logic and features. As you build your specific product, this section is designed to **grow and separate** from the generic design system.
+
+### Purpose & Evolution
+Unlike the *Design System* (which contains stateless, reusable UI atoms), the **Application** layer is where you implement:
+* **Business Rules**: Components that "know" about your data (e.g., `UserDashboard`, `CheckoutFlow`).
+* **Connected State**: Components that talk to an API or global store.
+* **Page Layouts**: Full-screen compositions.
+
+### How to Scale this Section
+1. **Start Small**: Begin by composing your Design System atoms into larger `features` (e.g., Auth, Billing).
+2. **Document Workflows**: Use this space to document complex user flows, not just individual components.
+3. **Isolate Logic**: As this section grows, keep your "smart" components here and your "pure" visual components in the Design System.
+
+---
+
+*This generic structure is intended to be overwritten and expanded as your specific application logic is developed.*

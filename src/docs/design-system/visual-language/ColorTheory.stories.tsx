@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { Meta } from "@storybook/react-vite";
 
 export default {
-  title: 'Visual Language/Color Theory',
+  title: 'Design System/Visual Language/Color Theory',
 } as Meta;
 
 const colorSteps = [

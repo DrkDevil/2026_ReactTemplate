@@ -1,10 +1,51 @@
-# Hello World
+# React Template Architecture
 
-Welcome to the documentation. This is a simplified entry point for your Storybook project.
+## Overview
+This is a **foundational starter kit** utilizing a hybrid architecture designed for scalability and maintainability. It provides a solid baseline combining **Atomic Design** for UI components with a **Domain-Driven Orchestration** layer for application logic. 
+
+**Note**: This structure is a recommendation to help projects scale. You are encouraged to adapt, extend, or simplify folders as your specific project requirements evolve.
+
+### Core Principles
+* **Clean Organization**: The `src` directory encourages keeping the root clean, organizing logic into clear sub-directories.
+* **Separation of Concerns**: We recommend treating `components/` and `theme/` as your internal UI library, while `app/` handles the business logic and glue.
+* **Encapsulation**: Keeping Frontend and Backend (if applicable) logic distinct helps prevent tight coupling, but these boundaries can be adjusted based on your architecture (e.g., BFF, Server Actions, or pure Client-Side).
 
 ---
 
-### Project Status
-* **Architecture**: Custom Folder System
-* **Environment**: React + Vite
-* **Design System**: Atomic Design (Atoms, Molecules, Organisms)
+## Default Directory Structure
+
+### 1. `src/app/` (The Orchestration Layer)
+The "Glue" of the application. This is where your features and business logic live.
+
+#### `app/frontend/`
+A comprehensive 7-folder convention to manage browser environments. Use what you need:
+* **`bootstrap/`**: Entry points (e.g., `main.tsx`, providers setup).
+* **`config/`**: Env vars and constants.
+* **`providers/`**: Global Contexts.
+* **`routes/`**: Routing configuration.
+* **`services/`**: API clients, analytics, or other singletons.
+* **`store/`**: State management (Zustand, Context, Redux).
+* **`types/`**: Application-specific TS definitions.
+
+#### `app/backend/` (Optional)
+A placeholder structure for server-side logic, BFFs, or API mocking.
+* **`api/`**, **`controllers/`**, **`db/`**, etc.: Standard backend patterns available for use if your project requires them.
+
+### 2. `src/components/` (The UI Library)
+Follows **Atomic Design** principles to keep components reusable and testable.
+* **`atoms/`**, **`molecules/`**, **`organisms/`**: Building blocks of increasing complexity.
+* **`templates/`**: Page layouts.
+* **`pages/`**: Top-level views connected to routes.
+
+### 3. `src/theme/`
+Your centralized Design System tokens (colors, spacing, typography).
+
+### 4. `src/docs/`
+Documentation, Storybook configuration, and guides.
+
+---
+
+## Recommended Workflow
+1. **Build Components**: Create reusable UI elements in `src/components/`, validating them here in Storybook.
+2. **Implement Logic**: Define valid business rules and state in `src/app/`.
+3. **Connect**: Assemble components into pages and connect them to your logic.
