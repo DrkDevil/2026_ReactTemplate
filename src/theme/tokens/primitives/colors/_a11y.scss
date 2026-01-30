@@ -1,0 +1,146 @@
+@use "sass:math";
+@use "sass:map";
+@use "sass:color";
+
+@function adjust-channel($c) {
+  @if $c <= 0.03928 {
+    @return math.div($c, 12.92);
+  } @else {
+    @return math.pow(math.div($c + 0.055, 1.055), 2.4);
+  }
+}
+
+@function get-relative-luminance($color) {
+  $r: math.div(color.channel($color, "red", $space: rgb), 255);
+  $g: math.div(color.channel($color, "green", $space: rgb), 255);
+  $b: math.div(color.channel($color, "blue", $space: rgb), 255);
+
+  @return (0.2126 * adjust-channel($r)) +
+          (0.7152 * adjust-channel($g)) +
+          (0.0722 * adjust-channel($b));
+}
+
+@function contrast($color1, $color2) {
+  $L1: get-relative-luminance($color1);
+  $L2: get-relative-luminance($color2);
+  @if $L1 < $L2 {
+    $temp: $L1;
+    $L1: $L2;
+    $L2: $temp;
+  }
+  @return math.div($L1 + 0.05, $L2 + 0.05);
+}
+
+@function find-closest-contrast($baseColor, $bg, $targetContrast) {
+  $h: color.channel($baseColor, "hue", $space: hsl);
+  $s: color.channel($baseColor, "saturation", $space: hsl);
+
+  $step: 1%;
+  $bestColor: null;
+  $bestDiff: null;
+
+  @for $i from 0 through 100 {
+    $l: $i * 1%;
+    $candidate: hsl($h, $s, $l);
+    $c: contrast($candidate, $bg);
+
+    @if $c >= $targetContrast {
+      $diff: math.abs($c - $targetContrast);
+
+      @if $bestDiff == null or $diff < $bestDiff {
+        $bestDiff: $diff;
+        $bestColor: $candidate;
+
+        @if $diff < 0.01 {
+          @return $candidate;
+        }
+      }
+    }
+  }
+
+  @if $bestColor != null {
+    @return $bestColor;
+  } @else {
+    @return hsl($h, $s, 0%);
+  }
+}
+
+@function generate-palette($baseColor, $bg: white) {
+  $palette: ();
+  $h: color.channel($baseColor, "hue", $space: hsl);
+  $s: color.channel($baseColor, "saturation", $space: hsl);
+
+  $palette: map.merge($palette, ("origin": $baseColor));
+  $palette: map.merge($palette, ("0": hsl($h, $s, 98%)));
+  $palette: map.merge($palette, ("5": hsl($h, $s, 96%)));
+
+  $base30: find-closest-contrast($baseColor, $bg, 3.0);
+  $l30: color.channel($base30, "lightness", $space: hsl);
+  
+  $lightTarget: 98%;
+
+  $toneWeights: (
+    "25": 0.2,
+    "20": 0.4,
+    "15": 0.6,
+    "10": 0.8
+  );
+
+  @each $step, $weight in $toneWeights {
+    $l: $l30 + ($lightTarget - $l30) * $weight;
+    $palette: map.merge($palette, ($step: hsl($h, $s, $l)));
+  }
+
+  $palette: map.merge($palette, ("30": $base30));
+
+  $targets: (
+    "45": 4.5,
+    "55": 5.5,
+    "65": 6.5,
+    "75": 7.5,
+    "85": 8.5,
+    "95": 9.5,
+    "100": 10.5
+  );
+
+  @each $step, $target in $targets {
+    $color: find-closest-contrast($baseColor, $bg, $target);
+    $palette: map.merge($palette, ($step: $color));
+  }
+
+  @return $palette;
+}
+
+$base-colors: (
+  "red":          hsl(0,   100%, 50%),
+  "redOrange":    hsl(15,  100%, 50%),
+  "orange":       hsl(30,  100%, 50%),
+  "amber":        hsl(45,  100%, 50%),
+  "yellow":       hsl(60,  100%, 50%),
+  "chartreuse":   hsl(75,  100%, 50%),
+  "lime":         hsl(90,  100%, 50%),
+  "green":        hsl(120, 100%, 50%),
+  "springGreen":  hsl(135, 100%, 50%),
+  "aquamarine":   hsl(150, 100%, 50%),
+  "turquoise":    hsl(165, 100%, 50%),
+  "cyan":         hsl(180, 100%, 50%),
+  "skyBlue":      hsl(195, 100%, 50%),
+  "azure":        hsl(210, 100%, 50%),
+  "royalBlue":    hsl(225, 100%, 50%),
+  "blue":         hsl(240, 100%, 50%),
+  "blueViolet":   hsl(255, 100%, 50%),
+  "violet":       hsl(270, 100%, 50%),
+  "purple":       hsl(285, 100%, 50%),
+  "magenta":      hsl(300, 100%, 50%),
+  "fuchsia":      hsl(315, 100%, 50%),
+  "rose":         hsl(345, 100%, 50%)
+);
+
+:root {
+  @each $name, $color in $base-colors {
+    $palette: generate-palette($color, white);
+    @each $step, $value in $palette {
+      --#{$name}-#{$step}: #{$value};
+    }
+  }
+}
