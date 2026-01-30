@@ -1,0 +1,30 @@
+# React Template 2026
+
+## Overview
+This is a **foundational starter kit** utilizing a hybrid architecture designed for scalability and maintainability. It provides a solid baseline combining **Atomic Design** for UI components with a **Domain-Driven Orchestration** layer for application logic. 
+
+**Note**: This structure is a recommendation to help projects scale. You are encouraged to adapt, extend, or simplify folders as your specific project requirements evolve.
+
+### Core Principles
+* **Clean Organization**: The `src` directory encourages keeping the root clean, organizing logic into clear sub-directories.
+* **Separation of Concerns**: We recommend treating `components/` and `theme/` as your internal UI library, while `app/` handles the business logic and glue.
+
+## Why a Template?
+
+### Not a "Full Blown" Design System
+This project intentionally does **not** ship with a library of pre-built UI components (like buttons, date molecules, or navigation headers).
+
+**The Goal**: I wanted to create a robust **Base Template** that I can fork to kickoff *any* new application.
+
+### Flexibility First
+The architecture is designed to support any implementation method I choose for a specific project:
+*   **Frameworks**: I can easily layer **MUI**, **Bootstrap**, or **Tailwind** on top of this structure.
+*   **From Scratch**: The folder structure supports building custom components using raw **TypeScript**, **SCSS**, and **HTML**.
+
+### Custom WCAG Color Generator
+While the component library is empty, I **did** include my own **Custom WCAG Color Generation Algorithm**.
+*   **Standardization**: I plan to use this algorithmic approach to color accessibility in all my future apps.
+*   **Evolution**: This engine serves as the source of truth for color, and we will update and refine the algorithm as needed for each specific project.
+
+
+

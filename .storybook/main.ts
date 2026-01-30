@@ -18,9 +18,9 @@ const config: StorybookConfig = {
       files: "**/*.mdx"
     },
     {
-      directory: "../src/docs",
-      titlePrefix: "",
-      files: "Welcome.mdx"
+      directory: "../src/docs/documentation",
+      titlePrefix: "Documentation",
+      files: "*.mdx"
     },
     "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"
   ],

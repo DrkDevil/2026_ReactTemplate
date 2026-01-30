@@ -1,0 +1,19 @@
+
+# Development Workflow
+
+## Recommended Process
+
+### 1. Build Components First
+Create reusable UI elements in `src/components/`, following Atomic Design principles. 
+*   **Validate in Storybook**: Ensure visual correctness and responsiveness before integrating them.
+*   **Keep it Stateless**: Avoid heavy business logic in your atoms/molecules.
+
+### 2. Implement Logic
+Define valid business rules, API calls, and state management in `src/app/`.
+*   **Services & Store**: Build the data layer independent of the UI.
+*   **Hooks**: Encapuslate logic in custom hooks.
+
+### 3. Connect & Assemble
+Assemble components into pages and connect them to your logic layer.
+*   **Page Views**: Create page-level components in `src/components/pages`.
+*   **Routes**: Map these pages to URLs in `src/app/frontend/routes`.

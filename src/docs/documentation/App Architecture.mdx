@@ -1,16 +1,4 @@
-# React Template 202
-
-## Overview
-This is a **foundational starter kit** utilizing a hybrid architecture designed for scalability and maintainability. It provides a solid baseline combining **Atomic Design** for UI components with a **Domain-Driven Orchestration** layer for application logic. 
-
-**Note**: This structure is a recommendation to help projects scale. You are encouraged to adapt, extend, or simplify folders as your specific project requirements evolve.
-
-### Core Principles
-* **Clean Organization**: The `src` directory encourages keeping the root clean, organizing logic into clear sub-directories.
-* **Separation of Concerns**: We recommend treating `components/` and `theme/` as your internal UI library, while `app/` handles the business logic and glue.
-* **Encapsulation**: Keeping Frontend and Backend (if applicable) logic distinct helps prevent tight coupling, but these boundaries can be adjusted based on your architecture (e.g., BFF, Server Actions, or pure Client-Side).
-
----
+# Application Architecture
 
 ## Default Directory Structure
 
@@ -42,10 +30,3 @@ Your centralized Design System tokens (colors, spacing, typography).
 
 ### 4. `src/docs/`
 Documentation, Storybook configuration, and guides.
-
----
-
-## Recommended Workflow
-1. **Build Components**: Create reusable UI elements in `src/components/`, validating them here in Storybook.
-2. **Implement Logic**: Define valid business rules and state in `src/app/`.
-3. **Connect**: Assemble components into pages and connect them to your logic.
