@@ -13,6 +13,11 @@ const config: StorybookConfig = {
       files: "*.mdx"
     },
     {
+      directory: "../src/docs/design-system/visual-language",
+      titlePrefix: "Design System/Visual Language",
+      files: "**/*.mdx"
+    },
+    {
       directory: "../src/docs",
       titlePrefix: "",
       files: "Welcome.mdx"

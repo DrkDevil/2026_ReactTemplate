@@ -1,0 +1,32 @@
+
+# WCAG Color Palettes
+
+## A11y First Color Generation
+Our color system is uniquely robust because it is algorithmically generated to ensure accessibility compliance from the ground up.
+
+### How it Works
+Instead of picking random hex values, we define a **Base Color** (e.g., Red) and a **Background Context** (e.g., White). Our SASS engine then mathematically calculates a spectrum of steps based on strict **Contrast Ratios**.
+
+### The Steps (Contrast Ratios)
+The number at the end of a color token represents its contrast ratio against white.
+
+*   **Step 30**: 3:1 Contrast (Minimum for Large Text / UI Components)
+*   **Step 45**: 4.5:1 Contrast (AA Standard for Normal Text)
+*   **Step 75**: 7.5:1 Contrast (AAA Standard)
+*   **Step 100**: Maximum Contrast
+
+```scss
+// Example usage
+.my-text {
+  // Guaranteed to meet AA standards on white
+  color: var(--blue-45); 
+}
+
+.my-button {
+  // Guaranteed to be accessible for non-text UI components
+  background: var(--red-30);
+}
+```
+
+### Generated Spectrum
+We automatically generate these palettes for every hue in the color wheel (Red, Blue, Green, Cyan, Magenta, etc.). See the **Visual Language > Color Theory** story to explore the full generated range.

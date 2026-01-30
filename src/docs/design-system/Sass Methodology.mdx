@@ -1,0 +1,53 @@
+
+# Sass Methodology
+
+## The Logic (Algorithm)
+Our styling engine relies on a strictly tiered **Token Consumption Algorithm**. This ensures that changes propagate predictably and maintenance is scalable.
+
+### 1. The Token Tier System
+Data flows downwards. You typically consume tokens at the **Semantic** level.
+
+*   **Tier 1: Primitives (The Absolute Truth)**
+    *   *What*: Raw values (Hex codes, pixels).
+    *   *Where*: `src/theme/tokens/primitives/`
+    *   *Example*: `--brand-blue: #007bff;`
+    *   *Rule*: **Never use these directly in components** if a semantic alias exists.
+
+*   **Tier 2: Semantics (The Context)**
+    *   *What*: Aliases that describe *purpose*, not value.
+    *   *Where*: `src/theme/tokens/semantic/`
+    *   *Example*: `--color-action-primary: var(--brand-blue);`
+    *   *Rule*: **Use these** for general application styling.
+
+*   **Tier 3: Component (The Specifics)**
+    *   *What*: Scoped overrides for specific components.
+    *   *Where*: Component `.scss` files.
+    *   *Example*: `.btn { background: var(--color-action-primary); }`
+
+---
+
+## How it Works
+1.  **Global Injection**: `src/theme/globals.scss` aggregates all primitives.
+2.  **CSS Variables**: We rely on native CSS variables for runtime dynamism (theming, dark mode).
+3.  **SCSS Modules**: We use SASS primarily for nesting and strictly typed management, but the output relies heavily on these global vars.
+
+## How to Apply It
+When building a new component:
+
+1.  **Identify the Intent**: Are you setting a background? Text color? Margin?
+2.  **Find the Semantic Token**: Look for `--bg-...`, `--text-...`, or `--space-...`.
+3.  **Fall back to Primitives (Rarely)**: Only if creating a bespoke, one-off visual element that breaks the system.
+
+```scss
+// BAD ❌
+.card {
+  background: #ffffff; // Hardcoded
+  padding: 16px;       // Hardcoded
+}
+
+// GOOD ✅
+.card {
+  background: var(--surface-card);
+  padding: var(--space-md);
+}
+```

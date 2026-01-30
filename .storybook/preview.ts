@@ -19,7 +19,7 @@ const preview: Preview = {
     options: {
       storySort: {
         method: 'alphabetical',
-        order: ['Welcome', 'Application', 'Design System', '*'],
+        order: ['Welcome', 'Application', 'Design System', ['Introduction', 'Sass Methodology', 'WCAG Color Palettes', 'Visual Language', '*'], '*'],
       },
     },
   },
